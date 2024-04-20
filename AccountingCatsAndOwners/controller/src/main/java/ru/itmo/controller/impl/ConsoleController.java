@@ -102,14 +102,14 @@ public class ConsoleController implements IController {
 
     private void getCats() {
         List<Cat> cats = catService.getAll();
-        cats.forEach(System.out::println);
+        cats.forEach(cat -> System.out.println(cat != null ? cat : "Котик не найден"));
     }
 
     private void getCat() {
         System.out.print("Введите ID котика: ");
         UUID id = UUID.fromString(scanner.nextLine());
         Cat cat = catService.get(id);
-        System.out.println(cat);
+        System.out.println(cat != null ? cat : "Котик не найден");
     }
 
     private void addCat() {
@@ -140,7 +140,11 @@ public class ConsoleController implements IController {
         System.out.print("Введите ID котика: ");
         UUID id = UUID.fromString(scanner.nextLine());
         List<UUID> friendsIds = catService.getFriendIds(id);
-        friendsIds.forEach(System.out::println);
+        if (friendsIds != null) {
+            friendsIds.forEach(System.out::println);
+        } else {
+            System.out.println("Котик не найден");
+        }
     }
 
     private void makeCatFriends() {
@@ -161,14 +165,14 @@ public class ConsoleController implements IController {
 
     private void getOwners() {
         List<Owner> owners = ownerService.getAll();
-        owners.forEach(System.out::println);
+        owners.forEach(owner -> System.out.println(owner != null ? owner : "Хозяин не найден"));
     }
 
     private void getOwner() {
         System.out.print("Введите ID хозяина: ");
         UUID id = UUID.fromString(scanner.nextLine());
         Owner owner = ownerService.get(id);
-        System.out.println(owner);
+        System.out.println(owner != null ? owner : "Хозяин не найден");
     }
 
     private void addOwner() {
@@ -193,7 +197,11 @@ public class ConsoleController implements IController {
         System.out.print("Введите ID хозяина: ");
         UUID id = UUID.fromString(scanner.nextLine());
         List<UUID> catsIds = ownerService.getCats(id);
-        catsIds.forEach(System.out::println);
+        if (catsIds != null) {
+            catsIds.forEach(System.out::println);
+        } else {
+            System.out.println("Хозяин не найден");
+        }
     }
 
     private void takeCat() {

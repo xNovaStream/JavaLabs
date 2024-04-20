@@ -42,7 +42,8 @@ public class CatService implements ICatService {
 
     @Override
     public List<UUID> getFriendIds(@NonNull UUID catId) {
-        return catDao.getFriendIds(catId).stream().map(CatEntity::getId).toList();
+        List<CatEntity> friends = catDao.getFriendIds(catId);
+        return friends != null ? friends.stream().map(CatEntity::getId).toList() : null;
     }
 
     @Override

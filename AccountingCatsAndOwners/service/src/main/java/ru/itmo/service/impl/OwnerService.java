@@ -47,7 +47,8 @@ public class OwnerService implements IOwnerService {
 
     @Override
     public List<UUID> getCats(@NonNull UUID id) {
-        return ownerDao.getCats(id).stream().map(CatEntity::getId).toList();
+        List<CatEntity> cats = ownerDao.getCats(id);
+        return cats != null ? cats.stream().map(CatEntity::getId).toList() : null;
     }
 
     @Override

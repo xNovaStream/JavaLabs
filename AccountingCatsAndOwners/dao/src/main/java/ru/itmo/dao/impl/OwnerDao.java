@@ -60,21 +60,19 @@ public class OwnerDao implements IOwnerDao {
     @Override
     public void delete(@NonNull UUID id) {
         try (Session session = sessionFactory.openSession()) {
-            OwnerEntity owner = session.getReference(OwnerEntity.class, id);
-            if (owner != null) {
-                session.beginTransaction();
-                session.remove(owner);
-                session.getTransaction().commit();
-            }
+            session.beginTransaction();
+            session.remove(session.getReference(OwnerEntity.class, id));
+            session.getTransaction().commit();
         }
     }
 
     @Override
     public List<CatEntity> getCats(@NonNull UUID id) {
         try (Session session = sessionFactory.openSession()) {
-            List<CatEntity> cats = session.getReference(OwnerEntity.class, id).getCats();
-            Hibernate.initialize(cats);
-            return cats;
+            OwnerEntity owner = session.get(OwnerEntity.class, id);
+            if (owner == null) return null;
+            Hibernate.initialize(owner.getCats());
+            return owner.getCats();
         }
     }
 }

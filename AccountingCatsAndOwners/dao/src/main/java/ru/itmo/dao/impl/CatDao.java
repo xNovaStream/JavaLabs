@@ -59,21 +59,19 @@ public class CatDao implements ICatDao {
     @Override
     public void delete(@NonNull UUID id) {
         try (Session session = sessionFactory.openSession()) {
-            CatEntity cat = session.getReference(CatEntity.class, id);
-            if (cat != null) {
-                session.beginTransaction();
-                session.remove(cat);
-                session.getTransaction().commit();
-            }
+            session.beginTransaction();
+            session.remove(session.getReference(CatEntity.class, id));
+            session.getTransaction().commit();
         }
     }
 
     @Override
     public List<CatEntity> getFriendIds(@NonNull UUID id) {
         try (Session session = sessionFactory.openSession()) {
-            List<CatEntity> friends = session.getReference(CatEntity.class, id).getFriends();
-            Hibernate.initialize(friends);
-            return friends;
+            CatEntity cat = session.get(CatEntity.class, id);
+            if (cat == null) return null;
+            Hibernate.initialize(cat.getFriends());
+            return cat.getFriends();
         }
     }
 }
