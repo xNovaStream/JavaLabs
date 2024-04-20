@@ -17,6 +17,7 @@ import java.util.UUID;
 public class OwnerEntity {
     @EqualsAndHashCode.Include
     @Id
+    @GeneratedValue
     @Column(columnDefinition = "UUID", nullable = false)
     private UUID id;
 
