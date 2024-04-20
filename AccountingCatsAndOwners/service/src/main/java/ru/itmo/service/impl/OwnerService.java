@@ -37,6 +37,9 @@ public class OwnerService implements IOwnerService {
 
     @Override
     public void add(@NonNull Owner owner) {
+        if (owner.getName().isEmpty()) {
+            throw new IllegalArgumentException("Name mustn't be empty");
+        }
         ownerDao.save(ownerParser.toTransientEntity(owner));
     }
 

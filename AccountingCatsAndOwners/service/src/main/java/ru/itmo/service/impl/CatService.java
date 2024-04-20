@@ -32,6 +32,9 @@ public class CatService implements ICatService {
 
     @Override
     public void add(@NonNull Cat cat) {
+        if (cat.getName().isEmpty() || cat.getBreed().isEmpty()) {
+            throw new IllegalArgumentException("Name and breed mustn't be empty");
+        }
         catDao.save(catParser.toTransientEntity(cat));
     }
 
