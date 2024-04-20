@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="59422462-2677-43ca-afad-879c4275e30b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../../../.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../.idea/hibernate.cfg.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../.idea/libraries/JPA_1_0_JPA_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../.idea/xNovaStream.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../AccountingCatsAndOwners.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/itmo/Main.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../controller/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../controller/src/main/java/ru/itmo/controller/ICatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../controller/src/main/java/ru/itmo/controller/IController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../controller/src/main/java/ru/itmo/controller/IOwnerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../controller/src/main/java/ru/itmo/controller/impl/ConsoleCatController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../controller/src/main/java/ru/itmo/controller/impl/ConsoleController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../controller/src/main/java/ru/itmo/controller/impl/ConsoleOwnerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../controller/src/main/java/ru/itmo/io/IIoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../controller/src/main/java/ru/itmo/io/impl/ConsoleIoService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/dao/ICatDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/dao/IOwnerDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/dao/impl/CatDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/dao/impl/OwnerDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/dto/Cat.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/dto/CatColor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/dto/Owner.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/entity/CatEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/entity/OwnerEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/parser/ICatParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/parser/IOwnerParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/parser/impl/CatParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/java/ru/itmo/parser/impl/OwnerParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../dao/src/main/resources/hibernate.cfg.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../service/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../service/src/main/java/ru/itmo/service/ICatService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../service/src/main/java/ru/itmo/service/IOwnerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../service/src/main/java/ru/itmo/service/impl/CatService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../service/src/main/java/ru/itmo/service/impl/OwnerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../dao.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../../../lib/javaee.jar" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../.." />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2gvRe1NRQTb2sFWV8MMaBBOD8zu" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "lab2",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Neo/IdeaProjects/xNovaStream/AccountingCatsAndOwners/application/src/main/java",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-5cd809f4" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="59422462-2677-43ca-afad-879c4275e30b" name="Changes" comment="" />
+      <created>1716576156968</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1716576156968</updated>
+      <workItem from="1716576157998" duration="64000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
