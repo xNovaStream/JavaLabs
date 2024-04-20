@@ -5,8 +5,6 @@ import ru.itmo.dto.Cat;
 import ru.itmo.dto.parser.ICatParser;
 import ru.itmo.entity.CatEntity;
 
-import java.util.stream.Collectors;
-
 public class CatParser implements ICatParser {
     @Override
     public Cat toDto(@NonNull CatEntity catEntity) {

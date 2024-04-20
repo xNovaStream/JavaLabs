@@ -42,7 +42,8 @@ public class ConsoleController implements IController {
                     12. Получить всех котиков хозяина
                     13. Взять котика
                     14. Бросить котика ( да как так можно то :( )
-                    15. Передать котика""");
+                    15. Передать котика
+                    16. Выйти""");
             int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
@@ -90,6 +91,8 @@ public class ConsoleController implements IController {
                 case 15:
                     giveCatToAnotherOwner();
                     break;
+                case 16:
+                    return;
                 default:
                     System.out.println("Неверный выбор. Попробуйте еще раз.");
                     break;

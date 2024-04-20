@@ -6,5 +6,5 @@ public enum CatColor {
     GREY,
     BROWN,
     RED,
-    TORTOISESHELL;
+    TORTOISESHELL
 }

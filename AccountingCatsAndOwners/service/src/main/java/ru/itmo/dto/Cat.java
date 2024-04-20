@@ -1,10 +1,12 @@
 package ru.itmo.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
+import lombok.Value;
 import ru.itmo.entity.CatColor;
 
 import java.time.LocalDate;
-import java.util.Set;
 import java.util.UUID;
 
 @Value
