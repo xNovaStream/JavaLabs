@@ -7,4 +7,11 @@
       <sourceFolder url="file://$MODULE_DIR$/AccountingCatsAndOwners/src/test/java" isTestSource="true" />
     </content>
   </component>
+  <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false" />
+      </configuration>
+    </facet>
+  </component>
 </module>

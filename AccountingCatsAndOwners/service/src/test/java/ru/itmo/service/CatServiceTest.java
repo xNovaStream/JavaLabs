@@ -14,6 +14,7 @@ import ru.itmo.service.impl.CatService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,7 +57,7 @@ public class CatServiceTest {
         CatEntity catEntity = catEntities.get(0);
         Cat cat = cats.get(0);
         UUID id = catEntity.getId();
-        when(catDao.findById(id)).thenReturn(catEntity);
+        when(catDao.findById(id)).thenReturn(Optional.of(catEntity));
 
         Cat result = catService.get(id);
 
@@ -91,19 +92,21 @@ public class CatServiceTest {
 
         catService.delete(id);
 
-        verify(catDao).delete(id);
+        verify(catDao).deleteById(id);
     }
 
     @Test
     void testGetFriendIds() {
-        UUID id = UUID.randomUUID();
+        CatEntity catEntity = catEntities.get(0);
+        UUID id = catEntity.getId();
+        catEntity.setFriends(catEntities);
 
-        when(catDao.getFriendIds(id)).thenReturn(catEntities);
+        when(catDao.findById(id)).thenReturn(Optional.of(catEntity));
 
         List<UUID> result = catService.getFriendIds(id);
 
         assertIterableEquals(cats.stream().map(Cat::getId).toList(), result);
-        verify(catDao).getFriendIds(id);
+        verify(catDao).findById(id);
     }
 
     @Test
@@ -113,14 +116,14 @@ public class CatServiceTest {
         UUID catId1 = catEntity1.getId();
         UUID catId2 = catEntity2.getId();
 
-        when(catDao.findById(catId1)).thenReturn(catEntity1);
-        when(catDao.findById(catId2)).thenReturn(catEntity2);
+        when(catDao.findById(catId1)).thenReturn(Optional.of(catEntity1));
+        when(catDao.findById(catId2)).thenReturn(Optional.of(catEntity2));
 
         catService.makeFriends(catId1, catId2);
 
         verify(catDao).findById(catId1);
         verify(catDao).findById(catId2);
-        verify(catDao).updateAll(catEntity1, catEntity2);
+        verify(catDao).saveAll(List.of(catEntity1, catEntity2));
         assertTrue(catEntity1.getFriends().contains(catEntity2));
         assertTrue(catEntity2.getFriends().contains(catEntity1));
     }
@@ -135,15 +138,54 @@ public class CatServiceTest {
         catEntity1.getFriends().add(catEntity2);
         catEntity2.getFriends().add(catEntity1);
 
-        when(catDao.findById(catId1)).thenReturn(catEntity1);
-        when(catDao.findById(catId2)).thenReturn(catEntity2);
+        when(catDao.findById(catId1)).thenReturn(Optional.of(catEntity1));
+        when(catDao.findById(catId2)).thenReturn(Optional.of(catEntity2));
 
         catService.unmakeFriends(catId1, catId2);
 
         verify(catDao).findById(catId1);
         verify(catDao).findById(catId2);
-        verify(catDao).updateAll(catEntity1, catEntity2);
+        verify(catDao).saveAll(List.of(catEntity1, catEntity2));
         assertFalse(catEntity1.getFriends().contains(catEntity2));
         assertFalse(catEntity2.getFriends().contains(catEntity1));
+    }
+
+    @Test
+    void testFindByColor() {
+        CatColor color = CatColor.WHITE;
+        List<CatEntity> whiteCatEntities = List.of(catEntities.get(0));
+        List<Cat> whiteCats = List.of(cats.get(0));
+        when(catDao.findByColor(color)).thenReturn(whiteCatEntities);
+
+        List<Cat> result = catService.findByColor(color);
+
+        assertIterableEquals(whiteCats, result);
+        verify(catDao).findByColor(color);
+    }
+
+    @Test
+    void testFindByName() {
+        String name = "Cat1";
+        List<CatEntity> namedCatEntities = List.of(catEntities.get(0));
+        List<Cat> namedCats = List.of(cats.get(0));
+        when(catDao.findByName(name)).thenReturn(namedCatEntities);
+
+        List<Cat> result = catService.findByName(name);
+
+        assertIterableEquals(namedCats, result);
+        verify(catDao).findByName(name);
+    }
+
+    @Test
+    void testFindByBreed() {
+        String breed = "breed";
+        List<CatEntity> breedCatEntities = catEntities;
+        List<Cat> breedCats = cats;
+        when(catDao.findByBreed(breed)).thenReturn(breedCatEntities);
+
+        List<Cat> result = catService.findByBreed(breed);
+
+        assertIterableEquals(breedCats, result);
+        verify(catDao).findByBreed(breed);
     }
 }

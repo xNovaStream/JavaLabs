@@ -1,6 +1,9 @@
 package ru.itmo.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.itmo.dao.ICatDao;
 import ru.itmo.dao.IOwnerDao;
 import ru.itmo.dto.Owner;
@@ -12,11 +15,13 @@ import ru.itmo.service.IOwnerService;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class OwnerService implements IOwnerService {
     private final IOwnerDao ownerDao;
     private final ICatDao catDao;
     private final IOwnerParser ownerParser;
 
+    @Autowired
     public OwnerService(@NonNull IOwnerDao ownerDao,
                         @NonNull ICatDao catDao,
                         @NonNull IOwnerParser ownerParser) {
@@ -27,61 +32,65 @@ public class OwnerService implements IOwnerService {
 
     @Override
     public Owner get(@NonNull UUID id) {
-        return ownerParser.toDto(ownerDao.getById(id));
+        return ownerParser.toDto(ownerDao.findById(id).orElse(null));
     }
 
     @Override
     public List<Owner> getAll() {
-        return ownerDao.getAll().stream().map(ownerParser::toDto).toList();
+        return ownerDao.findAll().stream().map(ownerParser::toDto).toList();
     }
 
     @Override
     public void add(@NonNull Owner owner) {
-        if (owner.getName().isEmpty()) {
-            throw new IllegalArgumentException("Name mustn't be empty");
-        }
+        if (owner.getId() != null) throw new IllegalArgumentException("Id of new owner must be null");
         ownerDao.save(ownerParser.toTransientEntity(owner));
     }
 
     @Override
     public void delete(@NonNull UUID id) {
-        ownerDao.delete(id);
+        ownerDao.deleteById(id);
     }
 
     @Override
+    @Transactional
     public List<UUID> getCats(@NonNull UUID id) {
-        List<CatEntity> cats = ownerDao.getCats(id);
-        return cats != null ? cats.stream().map(CatEntity::getId).toList() : null;
+        OwnerEntity owner = ownerDao.findById(id).orElse(null);
+        return owner != null ? owner.getCats().stream().map(CatEntity::getId).toList() : null;
     }
 
     @Override
     public void takeCat(@NonNull UUID ownerId, @NonNull UUID catId) {
-        OwnerEntity owner = ownerDao.getById(ownerId);
-        CatEntity cat = catDao.findById(catId);
+        OwnerEntity owner = ownerDao.findById(ownerId).orElse(null);
+        CatEntity cat = catDao.findById(catId).orElse(null);
         if (owner != null && cat != null && cat.getOwner() == null) {
-            owner.getCats().add(cat);
-            ownerDao.update(owner);
+            cat.setOwner(owner);
+            catDao.save(cat);
         }
     }
 
     @Override
     public void giveCat(@NonNull UUID ownerId, @NonNull UUID catId) {
-        OwnerEntity owner = ownerDao.getById(ownerId);
-        CatEntity cat = catDao.findById(catId);
+        OwnerEntity owner = ownerDao.findById(ownerId).orElse(null);
+        CatEntity cat = catDao.findById(catId).orElse(null);
         if (owner != null && cat != null && cat.getOwner() == owner) {
-            owner.getCats().remove(cat);
-            ownerDao.update(owner);
+            cat.setOwner(null);
+            catDao.save(cat);
         }
     }
 
     @Override
     public void giveCat(@NonNull UUID oldOwnerId, @NonNull UUID newOwnerId, @NonNull UUID catId) {
-        OwnerEntity oldOwner = ownerDao.getById(oldOwnerId);
-        OwnerEntity newOwner = ownerDao.getById(newOwnerId);
-        CatEntity cat = catDao.findById(catId);
+        OwnerEntity oldOwner = ownerDao.findById(oldOwnerId).orElse(null);
+        OwnerEntity newOwner = ownerDao.findById(newOwnerId).orElse(null);
+        CatEntity cat = catDao.findById(catId).orElse(null);
         if (oldOwner != null && newOwner != null && cat != null && cat.getOwner() == oldOwner) {
-            newOwner.getCats().add(cat);
-            ownerDao.update(newOwner);
+            cat.setOwner(newOwner);
+            catDao.save(cat);
         }
+    }
+
+    @Override
+    public List<Owner> findByName(@NonNull String name) {
+        return ownerDao.findByName(name).stream().map(ownerParser::toDto).toList();
     }
 }

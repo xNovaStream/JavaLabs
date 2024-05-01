@@ -1,9 +1,11 @@
 package ru.itmo.dto.parser.impl;
 
+import org.springframework.stereotype.Component;
 import ru.itmo.dto.Owner;
 import ru.itmo.dto.parser.IOwnerParser;
 import ru.itmo.entity.OwnerEntity;
 
+@Component
 public class OwnerParser implements IOwnerParser {
     @Override
     public Owner toDto(OwnerEntity ownerEntity) {

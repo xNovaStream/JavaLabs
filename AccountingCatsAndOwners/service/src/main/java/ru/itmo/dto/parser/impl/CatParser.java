@@ -1,9 +1,11 @@
 package ru.itmo.dto.parser.impl;
 
+import org.springframework.stereotype.Component;
 import ru.itmo.dto.Cat;
 import ru.itmo.dto.parser.ICatParser;
 import ru.itmo.entity.CatEntity;
 
+@Component
 public class CatParser implements ICatParser {
     @Override
     public Cat toDto(CatEntity catEntity) {

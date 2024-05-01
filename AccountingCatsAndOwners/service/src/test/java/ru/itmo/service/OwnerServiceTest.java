@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.itmo.dao.ICatDao;
 import ru.itmo.dao.IOwnerDao;
+import ru.itmo.dto.Cat;
 import ru.itmo.dto.Owner;
 import ru.itmo.dto.parser.IOwnerParser;
 import ru.itmo.dto.parser.impl.OwnerParser;
@@ -15,6 +16,7 @@ import ru.itmo.service.impl.OwnerService;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,22 +59,22 @@ public class OwnerServiceTest {
         Owner owner = owners.get(0);
         UUID id = owner.getId();
 
-        when(ownerDao.getById(id)).thenReturn(ownerEntity);
+        when(ownerDao.findById(id)).thenReturn(Optional.of(ownerEntity));
 
         Owner result = ownerService.get(id);
 
         assertEquals(owner, result);
-        verify(ownerDao).getById(id);
+        verify(ownerDao).findById(id);
     }
 
     @Test
     void testGetAll() {
-        when(ownerDao.getAll()).thenReturn(ownerEntities);
+        when(ownerDao.findAll()).thenReturn(ownerEntities);
 
         List<Owner> result = ownerService.getAll();
 
         assertIterableEquals(owners, result);
-        verify(ownerDao).getAll();
+        verify(ownerDao).findAll();
     }
 
     @Test
@@ -92,12 +94,13 @@ public class OwnerServiceTest {
 
         ownerService.delete(id);
 
-        verify(ownerDao).delete(id);
+        verify(ownerDao).deleteById(id);
     }
 
     @Test
     void testGetCats() {
-        UUID id = UUID.randomUUID();
+        OwnerEntity ownerEntity = ownerEntities.get(0);
+        UUID id = ownerEntity.getId();
         List<CatEntity> cats = List.of(
                 CatEntity.builder()
                         .id(UUID.randomUUID())
@@ -106,13 +109,14 @@ public class OwnerServiceTest {
                         .id(UUID.randomUUID())
                         .build()
         );
+        ownerEntity.setCats(cats);
 
-        when(ownerDao.getCats(id)).thenReturn(cats);
+        when(ownerDao.findById(id)).thenReturn(Optional.of(ownerEntity));
 
         List<UUID> result = ownerService.getCats(id);
 
         assertIterableEquals(cats.stream().map(CatEntity::getId).toList(), result);
-        verify(ownerDao).getCats(id);
+        verify(ownerDao).findById(id);
     }
 
     @Test
@@ -124,14 +128,14 @@ public class OwnerServiceTest {
                 .id(UUID.randomUUID())
                 .build();
 
-        when(ownerDao.getById(ownerId)).thenReturn(ownerEntity);
-        when(catDao.findById(catId)).thenReturn(catEntity);
+        when(ownerDao.findById(ownerId)).thenReturn(Optional.of(ownerEntity));
+        when(catDao.findById(catId)).thenReturn(Optional.of(catEntity));
 
         ownerService.takeCat(ownerId, catId);
 
-        verify(ownerDao).getById(ownerId);
+        verify(ownerDao).findById(ownerId);
         verify(catDao).findById(catId);
-        verify(ownerDao).update(ownerEntity);
+        verify(ownerDao).save(ownerEntity);
         assertTrue(ownerEntity.getCats().contains(catEntity));
     }
 
@@ -146,14 +150,14 @@ public class OwnerServiceTest {
                 .build();
         ownerEntity.getCats().add(catEntity);
 
-        when(ownerDao.getById(ownerId)).thenReturn(ownerEntity);
-        when(catDao.findById(catId)).thenReturn(catEntity);
+        when(ownerDao.findById(ownerId)).thenReturn(Optional.of(ownerEntity));
+        when(catDao.findById(catId)).thenReturn(Optional.of(catEntity));
 
         ownerService.giveCat(ownerId, catId);
 
-        verify(ownerDao).getById(ownerId);
+        verify(ownerDao).findById(ownerId);
         verify(catDao).findById(catId);
-        verify(ownerDao).update(ownerEntity);
+        verify(ownerDao).save(ownerEntity);
         assertFalse(ownerEntity.getCats().contains(catEntity));
     }
 
@@ -170,16 +174,29 @@ public class OwnerServiceTest {
                 .build();
         oldOwner.getCats().add(catEntity);
 
-        when(ownerDao.getById(oldOwnerId)).thenReturn(oldOwner);
-        when(ownerDao.getById(newOwnerId)).thenReturn(newOwner);
-        when(catDao.findById(catId)).thenReturn(catEntity);
+        when(ownerDao.findById(oldOwnerId)).thenReturn(Optional.of(oldOwner));
+        when(ownerDao.findById(newOwnerId)).thenReturn(Optional.of(newOwner));
+        when(catDao.findById(catId)).thenReturn(Optional.of(catEntity));
 
         ownerService.giveCat(oldOwnerId, newOwnerId, catId);
 
-        verify(ownerDao).getById(oldOwnerId);
-        verify(ownerDao).getById(newOwnerId);
+        verify(ownerDao).findById(oldOwnerId);
+        verify(ownerDao).findById(newOwnerId);
         verify(catDao).findById(catId);
-        verify(ownerDao).update(newOwner);
+        verify(ownerDao).save(newOwner);
         assertTrue(newOwner.getCats().contains(catEntity));
+    }
+
+    @Test
+    void testFindByName() {
+        String name = "Owner1";
+        List<OwnerEntity> namedOwnerEntities = List.of(ownerEntities.get(0));
+        List<Owner> namedOwners = List.of(owners.get(0));
+        when(ownerDao.findByName(name)).thenReturn(namedOwnerEntities);
+
+        List<Owner> result = ownerService.findByName(name);
+
+        assertIterableEquals(namedOwners, result);
+        verify(ownerDao).findByName(name);
     }
 }
