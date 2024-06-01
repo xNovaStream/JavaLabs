@@ -11,5 +11,6 @@
     <property name="hibernate.hbm2ddl.auto">update</property>
     <mapping class="ru.itmo.entity.OwnerEntity"/>
     <mapping class="ru.itmo.entity.CatEntity"/>
+    <mapping class="ru.itmo.entity.UserEntity"/>
   </session-factory>
 </hibernate-configuration>
