@@ -5,12 +5,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.itmo.dao.ICatDao;
 import ru.itmo.dao.IOwnerDao;
+import ru.itmo.dao.IUserDao;
 import ru.itmo.dto.Cat;
 import ru.itmo.dto.Owner;
+import ru.itmo.dto.User;
 import ru.itmo.dto.parser.IOwnerParser;
+import ru.itmo.dto.parser.IUserParser;
 import ru.itmo.dto.parser.impl.OwnerParser;
+import ru.itmo.dto.parser.impl.UserParser;
 import ru.itmo.entity.CatEntity;
 import ru.itmo.entity.OwnerEntity;
+import ru.itmo.entity.UserEntity;
+import ru.itmo.entity.UserRole;
 import ru.itmo.service.impl.OwnerService;
 
 import java.time.LocalDate;
@@ -25,6 +31,7 @@ import static org.mockito.Mockito.*;
 public class OwnerServiceTest {
     private IOwnerDao ownerDao;
     private ICatDao catDao;
+    private IUserDao userDao;
     private IOwnerService ownerService;
     private List<OwnerEntity> ownerEntities;
     private List<Owner> owners;
@@ -32,9 +39,11 @@ public class OwnerServiceTest {
     @BeforeEach
     void setUp() {
         IOwnerParser ownerParser = new OwnerParser();
+        IUserParser userParser = new UserParser();
         ownerDao = mock(IOwnerDao.class);
         catDao = mock(ICatDao.class);
-        ownerService = new OwnerService(ownerDao, catDao, ownerParser);
+        userDao = mock(IUserDao.class);
+        ownerService = new OwnerService(ownerDao, catDao, userDao, ownerParser, userParser);
 
         ownerEntities = List.of(
                 OwnerEntity.builder()
@@ -198,5 +207,26 @@ public class OwnerServiceTest {
 
         assertIterableEquals(namedOwners, result);
         verify(ownerDao).findByName(name);
+    }
+
+    @Test
+    void testAddUser() {
+        UUID id = UUID.randomUUID();
+        User user = User.builder()
+                .login("User")
+                .password("Password")
+                .ownerId(id)
+                .role(UserRole.USER)
+                .build();
+        UserEntity userEntity = UserEntity.builder()
+                .login("User")
+                .password("Password")
+                .id(id)
+                .role(UserRole.USER)
+                .build();
+
+        ownerService.addUser(user);
+
+        verify(userDao).save(userEntity);
     }
 }

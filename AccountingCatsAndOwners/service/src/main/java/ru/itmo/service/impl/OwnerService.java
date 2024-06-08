@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itmo.dao.ICatDao;
 import ru.itmo.dao.IOwnerDao;
+import ru.itmo.dao.IUserDao;
 import ru.itmo.dto.Owner;
+import ru.itmo.dto.User;
 import ru.itmo.dto.parser.IOwnerParser;
+import ru.itmo.dto.parser.IUserParser;
 import ru.itmo.entity.CatEntity;
 import ru.itmo.entity.OwnerEntity;
 import ru.itmo.service.IOwnerService;
@@ -19,15 +22,21 @@ import java.util.UUID;
 public class OwnerService implements IOwnerService {
     private final IOwnerDao ownerDao;
     private final ICatDao catDao;
+    private final IUserDao userDao;
     private final IOwnerParser ownerParser;
+    private final IUserParser userParser;
 
     @Autowired
     public OwnerService(@NonNull IOwnerDao ownerDao,
                         @NonNull ICatDao catDao,
-                        @NonNull IOwnerParser ownerParser) {
+                        @NonNull IUserDao userDao,
+                        @NonNull IOwnerParser ownerParser,
+                        @NonNull IUserParser userParser) {
         this.ownerDao = ownerDao;
         this.catDao = catDao;
+        this.userDao = userDao;
         this.ownerParser = ownerParser;
+        this.userParser = userParser;
     }
 
     @Override
@@ -92,5 +101,10 @@ public class OwnerService implements IOwnerService {
     @Override
     public List<Owner> findByName(@NonNull String name) {
         return ownerDao.findByName(name).stream().map(ownerParser::toDto).toList();
+    }
+
+    @Override
+    public void addUser(@NonNull User user) {
+        userDao.save(userParser.toEntity(user));
     }
 }

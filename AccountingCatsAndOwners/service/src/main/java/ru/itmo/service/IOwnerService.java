@@ -2,6 +2,7 @@ package ru.itmo.service;
 
 import lombok.NonNull;
 import ru.itmo.dto.Owner;
+import ru.itmo.dto.User;
 import ru.itmo.entity.OwnerEntity;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public interface IOwnerService {
     void giveCat(@NonNull UUID ownerId, @NonNull UUID catId);
     void giveCat(@NonNull UUID oldOwnerId, @NonNull UUID newOwnerId, @NonNull UUID catId);
     List<Owner> findByName(@NonNull String name);
+    void addUser(@NonNull User user);
 }
