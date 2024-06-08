@@ -7,5 +7,4 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface IUserDao extends JpaRepository<UserEntity, UUID> {
-    Optional<UserEntity> findByLogin(String login);
 }
