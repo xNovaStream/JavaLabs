@@ -3,6 +3,7 @@ package ru.itmo.service.impl;
 import jakarta.transaction.Transactional;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.itmo.dao.ICatDao;
 import ru.itmo.dao.IOwnerDao;
@@ -13,6 +14,7 @@ import ru.itmo.dto.parser.IOwnerParser;
 import ru.itmo.dto.parser.IUserParser;
 import ru.itmo.entity.CatEntity;
 import ru.itmo.entity.OwnerEntity;
+import ru.itmo.entity.UserEntity;
 import ru.itmo.service.IOwnerService;
 
 import java.util.List;
@@ -25,18 +27,21 @@ public class OwnerService implements IOwnerService {
     private final IUserDao userDao;
     private final IOwnerParser ownerParser;
     private final IUserParser userParser;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public OwnerService(@NonNull IOwnerDao ownerDao,
                         @NonNull ICatDao catDao,
                         @NonNull IUserDao userDao,
                         @NonNull IOwnerParser ownerParser,
-                        @NonNull IUserParser userParser) {
+                        @NonNull IUserParser userParser,
+                        @NonNull PasswordEncoder passwordEncoder) {
         this.ownerDao = ownerDao;
         this.catDao = catDao;
         this.userDao = userDao;
         this.ownerParser = ownerParser;
         this.userParser = userParser;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -105,6 +110,8 @@ public class OwnerService implements IOwnerService {
 
     @Override
     public void addUser(@NonNull User user) {
-        userDao.save(userParser.toEntity(user));
+        UserEntity userEntity = userParser.toEntity(user);
+        userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
+        userDao.save(userEntity);
     }
 }

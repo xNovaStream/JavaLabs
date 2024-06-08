@@ -3,6 +3,8 @@ package ru.itmo.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.itmo.dao.ICatDao;
 import ru.itmo.dao.IOwnerDao;
 import ru.itmo.dao.IUserDao;
@@ -39,10 +41,11 @@ public class OwnerServiceTest {
     void setUp() {
         IOwnerParser ownerParser = new OwnerParser();
         IUserParser userParser = new UserParser();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(5);
         ownerDao = mock(IOwnerDao.class);
         catDao = mock(ICatDao.class);
         userDao = mock(IUserDao.class);
-        ownerService = new OwnerService(ownerDao, catDao, userDao, ownerParser, userParser);
+        ownerService = new OwnerService(ownerDao, catDao, userDao, ownerParser, userParser, passwordEncoder);
 
         ownerEntities = List.of(
                 OwnerEntity.builder()
@@ -210,6 +213,7 @@ public class OwnerServiceTest {
 
     @Test
     void testAddUser() {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(5);
         UUID id = UUID.randomUUID();
         User user = User.builder()
                 .login("User")
@@ -219,7 +223,7 @@ public class OwnerServiceTest {
                 .build();
         UserEntity userEntity = UserEntity.builder()
                 .login("User")
-                .password("Password")
+                .password(passwordEncoder.encode("Password"))
                 .id(id)
                 .role(UserRole.USER)
                 .build();
