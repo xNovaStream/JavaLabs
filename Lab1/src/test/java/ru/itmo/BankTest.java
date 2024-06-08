@@ -34,7 +34,7 @@ public class BankTest {
         fullPerson = sberBank.getClients().stream().filter(p -> p.getId() == fullId).findFirst().orElseThrow();
         notFullPerson = sberBank.getClients().stream().filter(p -> p.getId() == notFullId).findFirst().orElseThrow();
 
-        UUID fullInTinkoff = registerPerson(PersonTest.personFullBuilder, tinkoff);
+        registerPerson(PersonTest.personFullBuilder, tinkoff);
         fullTinkPerson = tinkoff.getClients().iterator().next();
         UUID id1, id2, id3;
         id1 = sberBank.registerAccount(fullPerson, AccountTest.CreditAccountBuilder);

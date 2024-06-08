@@ -1,6 +1,5 @@
 package ru.itmo.entity.account;
 
-import lombok.Builder;
 import ru.itmo.entity.Bank;
 import ru.itmo.entity.IClock;
 import ru.itmo.exception.AccountException;
