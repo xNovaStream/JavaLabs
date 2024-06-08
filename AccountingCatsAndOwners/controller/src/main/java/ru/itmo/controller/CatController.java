@@ -30,7 +30,7 @@ public class CatController {
 
     @GetMapping("/{id}")
     @PostAuthorize("hasRole('ADMIN') or returnObject.ownerId == principal.ownerId")
-    public Cat getCat(@PathVariable UUID id, @AuthenticationPrincipal MyUserDetails userDetails) {
+    public Cat getCat(@PathVariable UUID id) {
         return catService.get(id);
     }
 

@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import ru.itmo.dao.ICatDao;
 import ru.itmo.dao.IOwnerDao;
 import ru.itmo.dao.IUserDao;
-import ru.itmo.dto.Cat;
 import ru.itmo.dto.Owner;
 import ru.itmo.dto.User;
 import ru.itmo.dto.parser.IOwnerParser;

@@ -3,7 +3,6 @@ package ru.itmo.service;
 import lombok.NonNull;
 import ru.itmo.dto.Owner;
 import ru.itmo.dto.User;
-import ru.itmo.entity.OwnerEntity;
 
 import java.util.List;
 import java.util.UUID;
