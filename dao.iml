@@ -7,7 +7,7 @@
           <unit-entry name="hibernate.cfg.xml" value="cec1374a-c005-4b75-8bdf-10e86a21678a" />
         </datasource-map>
         <naming-strategy-map />
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/AccountingCatsAndOwners/dao/src/main/resources/hibernate.cfg.xml" />
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/AccountingCatsAndOwners/models/src/main/resources/hibernate.cfg.xml" />
       </configuration>
     </facet>
   </component>
