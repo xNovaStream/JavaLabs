@@ -25,7 +25,7 @@ public class RabbitReceiver {
     }
 
     @RabbitListener(queues = "getAllOwnersQueue")
-    public Owner[] processGetAllOwnersMessage(String message) {
+    public Owner[] processGetAllOwnersMessage(String ignoredMessage) {
         return ownerService.getAll().toArray(new Owner[0]);
     }
 
